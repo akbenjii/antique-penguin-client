@@ -1,6 +1,6 @@
 {
   "name": "antique",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "antique penguin desktop client",
   "main": "main.js",
   "directories": {
