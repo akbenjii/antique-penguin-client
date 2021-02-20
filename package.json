@@ -7,7 +7,7 @@
     "lib": "lib"
   },
   "devDependencies": {
-    "electron": "^6.1.2",
+    "electron": ">=9.4.0",
     "electron-packager": "^15.2.0"
   },
   "scripts": {
