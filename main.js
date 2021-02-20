@@ -25,7 +25,7 @@ function createWindow() {
     let splash = new BrowserWindow(
         {width: 512,
             height: 512,
-            icon: `${__dirname}/lib/img/logo.ico`,
+            icon: `${__dirname}/lib/img/icon.ico`,
             transparent: true,
             frame: false,
             alwaysOnTop: true
@@ -34,7 +34,7 @@ function createWindow() {
     const win = new BrowserWindow({
         width: 1120,
         height: 720,
-        icon: `${__dirname}/lib/img/logo.ico`,
+        icon: `${__dirname}/lib/img/icon.ico`,
         webPreferences: {
             plugins: true,
         },
@@ -49,22 +49,22 @@ function createWindow() {
             win.webContents.executeJavaScript('window.scrollTo(0,55)').then(() => {
                 splash.destroy();
                 win.show();
+
+                rpc.login({clientId: CLIENT_ID}).catch(() => console.log('RPC timed out...'));
+
+                setInterval(async () => {
+                    let room = await win.webContents.executeJavaScript('current_room').catch(() => console.log('current_room not found.'));
+                    if(!room) return;
+
+                    rpc.setActivity({
+                        largeImageKey: "main-logo",
+                        startTimestamp: TIMESTAMP,
+                        state: state[room]
+                    }).catch(e => console.log(e));
+                }, 1000)
             })
         }).catch(e => console.log(e));
     });
-
-    rpc.login({clientId: CLIENT_ID}).catch(() => console.log('RPC timed out...'));
-
-    setInterval(async () => {
-        let room = await win.webContents.executeJavaScript('current_room').catch(() => console.log('current_room not found.'));
-        if(!room) return;
-
-        rpc.setActivity({
-            largeImageKey: "main-logo",
-            startTimestamp: TIMESTAMP,
-            state: state[room]
-        }).catch(e => console.log(e));
-    }, 1000)
 }
 
 app.whenReady().then(createWindow);
