@@ -30,7 +30,7 @@ function createWindow() {
             frame: false,
             alwaysOnTop: true
         });
-    splash.loadFile(`${__dirname}/lib/splash.html`);
+    splash.loadFile(`${__dirname}/lib/splash.html`).then(() => console.log('loaded splash.'));
     const win = new BrowserWindow({
         width: 1120,
         height: 720,
